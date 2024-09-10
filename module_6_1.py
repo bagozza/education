@@ -1,5 +1,4 @@
 class Plant:
-    name: str = ''
     edible = False
 
     def __init__(self, name):
@@ -7,11 +6,10 @@ class Plant:
 
 
 class Flower(Plant):
-    edible = False
+    pass
 
 
 class Animal:
-    name = ''
     alive = True
     fed = False
 
@@ -20,10 +18,10 @@ class Animal:
 
     def eat(self, food):
         if food.edible:
-            Animal.fed = True
+            self.fed = True
             print(f"{self.name} съел {food.name}")
         else:
-            Animal.alive = False
+            self.alive = False
             print(f"{self.name} не стал есть {food.name}")
 
 
@@ -53,3 +51,4 @@ a1.eat(p1)
 a2.eat(p2)
 print(a1.alive)
 print(a2.fed)
+
