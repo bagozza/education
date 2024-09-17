@@ -20,7 +20,7 @@ class Shop:
         file.close()
         return products
 
-    def add(self, *products: Product):
+    def add(self, *products):
         for prod in products:
             if prod.name in self.get_products():
                 print(f'Продукт {prod.name} уже есть в магазине')
@@ -41,3 +41,4 @@ print(p2)  # __str__
 s1.add(p1, p2, p3)
 
 print(s1.get_products())
+
