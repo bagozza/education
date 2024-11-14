@@ -5,7 +5,7 @@ import Tour
 class TournamentTest(unittest.TestCase):
     is_frozen = True
 
-    @unittest.skipIf(is_frozen == True, 'Тесты в этом кейсе заморожены.')
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены.')
     @classmethod
     def setUpClass(cls):
         cls.all_results = []
@@ -47,7 +47,7 @@ class TournamentTest(unittest.TestCase):
 class RunnerTest(unittest.TestCase):
     is_frozen = False
 
-    @unittest.skipIf(is_frozen == True, 'Тесты в этом кейсе заморожены.')
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены.')
     def test_walk(self):
         alexandr = Tour.Runner('Alexandr')
         for _ in range(10):
