@@ -8,11 +8,19 @@ import asyncio
 api = ''
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
-kb = ReplyKeyboardMarkup(resize_keyboard=True)
-button = KeyboardButton(text='Информация')
-button_1 = KeyboardButton(text='Рассчитать')
-kb.add(button)
-kb.add(button_1)
+# kb = ReplyKeyboardMarkup(resize_keyboard=True)
+# button = KeyboardButton(text='Информация')
+# button_1 = KeyboardButton(text='Рассчитать')
+# kb.add(button)
+# kb.add(button_1)
+
+start_menu = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text='Информация'),
+         KeyboardButton(text='Рассчитать')
+         ]
+    ], resize_keyboard=True
+)
 
 
 # @dp.message_handler(commands=['start'])
@@ -35,7 +43,7 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands=['start'])
 async def start(message):
-    await message.answer('Привет! Я бот помогающий твоему здоровью. ', reply_markup=kb)
+    await message.answer('Привет! Я бот помогающий твоему здоровью. ', reply_markup=start_menu)
 
 
 @dp.message_handler(text='Информация')
@@ -79,7 +87,7 @@ async def send_calories(message, state):
 @dp.message_handler()
 async def all_message(message):
     print('Мы получили сообщение! ')
-    await message.answer('Нажми на эту кнопочку: \n/start чтобы все заработало :)')
+    await message.answer('Введите команду /start чтобы начать общение.')
 
 
 # class UserState(StatesGroup):
@@ -102,3 +110,4 @@ async def all_message(message):
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
+
