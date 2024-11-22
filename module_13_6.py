@@ -6,19 +6,34 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.dispatcher import FSMContext
 import asyncio
 
-api = '7530684445:AAHHGgURg1Z3Wxbi1IB1vjHs8XIQXI0jJFE'
+api = ''
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
-kb = ReplyKeyboardMarkup(resize_keyboard=True)
-button = KeyboardButton(text='Информация')
-button_1 = KeyboardButton(text='Рассчитать')
-kb.add(button)
-kb.add(button_1)
-kb_1 = InlineKeyboardMarkup()
-button_2 = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
-button_3 = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
-kb_1.add(button_2)
-kb_1.add(button_3)
+# kb = ReplyKeyboardMarkup(resize_keyboard=True)
+# button = KeyboardButton(text='Информация')
+# button_1 = KeyboardButton(text='Рассчитать')
+# kb.add(button)
+# kb.add(button_1)
+# kb_1 = InlineKeyboardMarkup()
+# button_2 = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
+# button_3 = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
+# kb_1.add(button_2)
+# kb_1.add(button_3)
+
+start_menu = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text='Информация'),
+         KeyboardButton(text='Рассчитать')
+         ]
+    ], resize_keyboard=True
+)
+
+option_menu = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories'),
+         InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')]
+    ], resize_keyboard=True
+)
 
 
 # @dp.message_handler(commands=['start'])
@@ -41,19 +56,17 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands=['start'])
 async def start(message):
-    await message.answer('Привет! Я бот помогающий твоему здоровью. ', reply_markup=kb)
+    await message.answer('Привет! ', reply_markup=start_menu)
 
 
-# @dp.callback_query_handler(text='info')
-# async def info(call):
-#     await call.message.answer('Информация о боте')
-#     await call.answer()
+@dp.message_handler(text='Информация')
+async def info(message):
+    await message.answer('Я бот помогающий твоему здоровью.')
 
 
 @dp.message_handler(text='Рассчитать')
 async def main_menu(message):
-    await message.answer('Выберите опцию:', reply_markup=kb_1)
-    await message.answer()
+    await message.answer('Выберите опцию: ', reply_markup=option_menu)
 
 
 @dp.callback_query_handler(text='formulas')
@@ -95,10 +108,10 @@ async def send_calories(message, state):
     await state.finish()
 
 
-@dp.message_handler()
-async def all_message(message):
-    print('Мы получили сообщение! ')
-    await message.answer('Нажми на эту кнопочку: \n/start чтобы все заработало :)')
+# @dp.message_handler()
+# async def all_message(message):
+#     print('Мы получили сообщение! ')
+#     await message.answer('Нажми на эту кнопочку: \n/start чтобы все заработало :)')
 
 
 # class UserState(StatesGroup):
