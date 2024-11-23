@@ -6,7 +6,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.dispatcher import FSMContext
 import asyncio
 
-api = ''
+api = '7530684445:AAHHGgURg1Z3Wxbi1IB1vjHs8XIQXI0jJFE'
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 # kb = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -56,7 +56,7 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands=['start'])
 async def start(message):
-    await message.answer('Привет! ', reply_markup=start_menu)
+    await message.answer('Привет! Я бот помогающий твоему здоровью.', reply_markup=start_menu)
 
 
 @dp.message_handler(text='Информация')
@@ -71,7 +71,7 @@ async def main_menu(message):
 
 @dp.callback_query_handler(text='formulas')
 async def get_formulas(call):
-    await call.message.answer('для мужчин: 10 х вес (кг) + 6,25 x рост (см) – 5 х возраст (г) + 5')
+    await call.message.answer('для мужчин: 10 х вес (кг) + 6,25 x рост (см) – 5 х возраст (г) - 161')
     await call.answer()
 
 
@@ -100,7 +100,7 @@ async def send_calories(message, state):
     await state.update_data(weight=message.text)
     data = await state.get_data()
     try:
-        calories = 10 * float(data['weight']) + 6.25 * float(data['growth']) - 5 * float(data['age']) + 5
+        calories = 10 * float(data['weight']) + 6.25 * float(data['growth']) - 5 * float(data['age']) - 161
         await message.answer(f'Ваша норма калорий - {calories}')
     except ValueError:
         await message.answer('Используй циферки))')
@@ -134,3 +134,4 @@ async def send_calories(message, state):
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
+
