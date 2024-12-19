@@ -18,7 +18,7 @@ async def admin() -> dict:
 
 @app.get("/user/{user_id}")
 async def id_user(
-        user_id: Annotated[int, Path(ge=1, le=100, description='Enter ur ID', exampl=1)]
+        user_id: Annotated[int, Path(ge=1, le=100, description='Enter ur ID', example=1)]
 ) -> dict:
     return {'message': f'Вы вошли как пользователь № {user_id}'}
 
