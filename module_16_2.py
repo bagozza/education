@@ -17,14 +17,15 @@ async def admin() -> dict:
 
 
 @app.get("/user/{user_id}")
-async def id_user(user_id: int = Path(ge=1, le=100, description='Enter ur ID', example=1)) -> dict:
+async def id_user(
+        user_id: Annotated[int, Path(ge=1, le=100, description='Enter ur ID', exampl=1)]) -> dict:
     return {'message': f'Вы вошли как пользователь № {user_id}'}
 
 
 @app.get("/user/{username}/{age}")
 async def user_dict(
-        username: Annotated[str, Path(min_length=5, max_length=20, description='Enter username', example='UrbanUser')],
-        age: int = Path(ge=18, le=120, description='Enter age', example=24)) -> dict:
+        username: Annotated[str, Path(min_length=5, max_length=20, description='Enter username', exampl='UrbanUser')],
+        age: Annotated[int, Path(ge=18, le=120, description='Enter age', exampl=24)]) -> dict:
     return {f'Информация о пользователе. Имя': {username}, 'Возраст': {age}}
 
 
